@@ -109,9 +109,12 @@ def main():
         client, addr = server.accept()
 
         req = client.recv(1024).split(b'\r\n')
-        path = req[0].split(b' ')[1].decode('utf8')
-        args = parse.unquote_plus(path).split('/')
-        args.pop(0)
+        try:
+            path = req[0].split(b' ')[1].decode('utf8')
+            args = parse.unquote_plus(path).split('/')
+            args.pop(0)
+        except Exception:
+            args = ['']
 
         print(args)
 
